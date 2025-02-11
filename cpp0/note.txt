@@ -1,0 +1,99 @@
+Key Guidelines for C++ Coding Style and Best Practices
+
+✅ Class Naming & File Naming Conventions
+
+    Class names must be written in UpperCamelCase format.
+    File names should match the class name:
+        Example: BrickWall class → Files: BrickWall.hpp, BrickWall.cpp, BrickWall.tpp (if applicable).
+
+✅ Output Formatting
+
+    All output messages must end with a new-line character (\n).
+    Output should be displayed to standard output (std::cout).
+
+✅ Memory Management
+
+    Avoid memory leaks by properly managing dynamically allocated memory.
+    Always delete allocated memory when no longer needed.
+    Use smart pointers (std::unique_ptr, std::shared_ptr) when applicable.
+
+✅ Orthodox Canonical Form (OCF) Requirement
+
+    Modules 02 to 09: Classes must follow Orthodox Canonical Form (OCF) unless explicitly stated otherwise.
+    This means every class must implement:
+        Default Constructor
+        Copy Constructor
+        Copy Assignment Operator (operator=)
+        Destructor
+
+
+🔹 1. 🚫 Forbidden Libraries
+
+    You CANNOT use:
+        C++11 and later features (e.g., auto, nullptr, std::unique_ptr, std::shared_ptr, lambda functions, move semantics).
+        Boost library (e.g., boost::filesystem, boost::smart_ptr, etc.).
+
+💡 What to Use Instead?
+
+    Stick to C++98 standard (which means no modern features).
+    Use manual memory management instead of std::unique_ptr or std::shared_ptr.
+
+🔹 2. 🚫 Forbidden Functions
+
+You CANNOT use the following standard C functions:
+Forbidden Function	Reason (Why It’s Not Allowed)
+printf()	Uses C-style formatting instead of C++ std::cout
+malloc()	C-style memory allocation (use new instead)
+calloc()	C-style memory allocation (use new instead)
+realloc()	C-style memory management (use new instead)
+free()	C-style memory deallocation (use delete instead)
+
+💡 What to Use Instead?
+
+    ✅ Use std::cout instead of printf()
+    ✅ Use new instead of malloc()
+    ✅ Use delete instead of free()
+
+using namespace std;  // ❌ Forbidden
+
+
+🚀 Key Rules and Their Meaning
+1️⃣ Forbidden External Libraries
+
+    You CANNOT use C++11 or later features (e.g., std::unique_ptr, std::shared_ptr, std::move, auto, lambda functions).
+    You CANNOT use the Boost library.
+    Only standard C++98 is allowed unless specified otherwise.
+
+2️⃣ Forbidden Functions
+
+You CANNOT use the following functions:
+
+    printf() and related functions (sprintf(), fprintf(), etc.) from C's stdio.h.
+    Memory allocation functions:
+        malloc()
+        calloc()
+        realloc()
+        free()
+
+✅ Use new and delete instead of malloc() and free()
+❌ If you use printf(), malloc(), or free(), your grade will be 0.
+3️⃣ using namespace <ns_name> is Forbidden
+
+    You CANNOT use:
+
+using namespace std;  // ❌ Forbidden
+
+Instead, always explicitly prefix standard functions:
+
+    std::cout << "Hello, world!" << std::endl;  // ✅ Allowed
+
+4️⃣ friend Keyword is Forbidden
+
+    The friend keyword allows a function or another class to access private members of a class.
+    You CANNOT use friend in your code.
+
+❌ Forbidden Example:
+
+class A {
+    friend class B;  // ❌ Not allowed
+};
