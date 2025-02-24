@@ -1,18 +1,18 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror
+# CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-NAME = phoneBook
-SRCS = src/contact.cpp src/phoneBook.cpp src/main.cpp
+NAME = account
+SRCS = Account.cpp tests.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) -Iincludes $(OBJS) -o $(NAME)
+	$(CXX) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
-	$(CXX) -Iincludes $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
