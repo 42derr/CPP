@@ -2,8 +2,8 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-NAME = brain
-SRCS = main.cpp
+NAME = fixed
+SRCS = main.cpp Fixed.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)

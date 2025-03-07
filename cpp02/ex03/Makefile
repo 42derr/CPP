@@ -2,8 +2,8 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 CXXFLAGS += -std=c++98
 
-NAME = fixed
-SRCS = main.cpp Fixed.cpp
+NAME = bsp
+SRCS = main.cpp Fixed.cpp Point.cpp bsp.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
