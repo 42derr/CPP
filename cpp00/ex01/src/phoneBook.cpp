@@ -4,7 +4,15 @@ PhoneBook::PhoneBook() : contactCount(0), oldestIndex(0) {}
 
 PhoneBook::~PhoneBook() {}
 
-void PhoneBook::_addContact(const Contact &newContact) {
+void PhoneBook::printMenu(void) {
+    std::cout << "Welcome to My Awesome PhoneBook" << std::endl;
+    std::cout << "Avaiable commands:" << std::endl;
+    std::cout << "ADD - Save a new contact" << std::endl;
+    std::cout << "SEARCH - Display a specific contact" << std::endl;
+    std::cout << "EXIT - Exit the program" << std::endl;
+}
+
+void PhoneBook::addContact(const Contact &newContact) {
     if (contactCount < 8) {
         contact[contactCount] = newContact;
         contactCount++;
@@ -14,7 +22,7 @@ void PhoneBook::_addContact(const Contact &newContact) {
     }
 }
 
-void PhoneBook::_displayContacts() const {
+void PhoneBook::displayContacts() const {
     std::cout << std::setw(10) << "Index" << "|"
               << std::setw(10) << "First Name" << "|"
               << std::setw(10) << "Last Name" << "|"
@@ -37,7 +45,7 @@ void PhoneBook::_displayContacts() const {
     }
 }
 
-bool PhoneBook::_searchContact(int index) const {
+bool PhoneBook::searchContact(int index) const {
     if (index < 0 || index >= contactCount) {
         std::cout << "Invalid index!" << std::endl;
         return false;
