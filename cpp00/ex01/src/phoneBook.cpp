@@ -14,19 +14,20 @@ void PhoneBook::printMenu(void) {
 
 void PhoneBook::addContact(void) {
     std::string details[5];
-    const std::string prompts[5] = {
-        "Enter first name: ",
-        "Enter last name: ",
-        "Enter nickname: ",
-        "Enter phone number: ",
-        "Enter darkest secret: "
-    }; 
-    int cur = 0;
-    while (cur < 5)
-    {
-        std::cout << prompts[cur];
-        std::getline(std::cin, details[cur]);
 
+    for (int cur = 0; cur < 5; cur++)
+    {
+        if (cur == 0)
+            std::cout << "Enter first name: ";
+        else if (cur == 1)
+            std::cout << "Enter last name: ";
+        else if (cur == 2)
+            std::cout << "Enter nickname: ";
+        else if (cur == 3)
+            std::cout << "Enter phone number: ";
+        else if (cur == 4)
+            std::cout << "Enter darkest secret: ";
+        std::getline(std::cin, details[cur]);
         if (std::cin.eof()) {
             return ;
         }
@@ -41,7 +42,6 @@ void PhoneBook::addContact(void) {
             if (!isValidPhoneNumber(details[cur]))
                 continue;
         }
-        cur++;
     }
     Contact newContact;
     newContact.setField(Contact::FIRST_NAME ,details[0]);

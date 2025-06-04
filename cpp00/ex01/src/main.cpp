@@ -1,6 +1,5 @@
 # include "../includes/phoneBook.hpp"
 
-//check leaks later ????? WHEN ^C
 int main(int argc, char* argv[]) {
     PhoneBook phonebook;
 
