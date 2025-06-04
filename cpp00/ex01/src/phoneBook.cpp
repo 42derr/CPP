@@ -15,7 +15,7 @@ void PhoneBook::printMenu(void) {
 void PhoneBook::addContact(void) {
     std::string details[5];
 
-    for (int cur = 0; cur < 5; cur++)
+    for (int cur = 0; cur < 5;)
     {
         if (cur == 0)
             std::cout << "Enter first name: ";
@@ -42,6 +42,7 @@ void PhoneBook::addContact(void) {
             if (!isValidPhoneNumber(details[cur]))
                 continue;
         }
+        cur++;
     }
     Contact newContact;
     newContact.setField(Contact::FIRST_NAME ,details[0]);
