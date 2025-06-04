@@ -28,19 +28,23 @@ std::string trim(const std::string& str) {
 
 bool isValidPhoneNumber(const std::string& phoneNumber) {
     size_t i = 0;
+
     if (phoneNumber[0] == '+') {
         i = 1;
     }
-    if (phoneNumber.length() == i) {
-        return false;
-    }
-    while (i < phoneNumber.length())
-    {
-        if (!std::isdigit(phoneNumber[i])) {
+    for (size_t j = i; j < phoneNumber.length(); ++j) {
+        if (!std::isdigit(phoneNumber[j])) {
             std::cout << "Please enter phone number with digits only." << std::endl;
             return false;
         }
-        i++;
+    }
+    size_t digitCount = phoneNumber.length() - i;
+    if (digitCount < 7) {
+        std::cout << "Your phone number is too short." << std::endl;
+        return false;
+    } else if (digitCount > 15) {
+        std::cout << "Your phone number is too long." << std::endl;
+        return false;
     }
     return true;
 }

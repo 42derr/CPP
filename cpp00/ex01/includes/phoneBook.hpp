@@ -4,6 +4,7 @@
 # include <iostream>
 # include <iomanip>
 # include <string>
+# include <limits>
 # include "contact.hpp"
 # include "phoneBookUtils.hpp"
 
@@ -17,9 +18,9 @@ public:
     PhoneBook();
     ~PhoneBook();
 
-    void addContact(const Contact& newContact);
-    void displayContacts() const;
-    bool searchContact(int index) const;
+    void addContact(void);
+    void displayContacts(void) const;
+    void searchContact(void);
     void printMenu(void);
 };
 #endif
