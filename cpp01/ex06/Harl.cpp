@@ -1,5 +1,17 @@
 # include "Harl.hpp"
 
+int hash_level(const std::string& s)
+{
+    int h = 0;
+    for (size_t i = 0; i < s.length(); i++)
+    {
+        h = 31 * h + s[i];
+    }
+    int valid = (s == "DEBUG" || s == "INFO" || s == "WARNING" || s == "ERROR");
+    int final_hash = h * valid;
+    return final_hash;
+}
+
 Harl::Harl() {
     complaints[0] = &Harl::debug;
     complaints[1] = &Harl::info;
@@ -26,41 +38,30 @@ void Harl::error( void ) {
 }
 
 void Harl::complain( std::string level ) {
-    int index;
+    const  int debug = 64921139;
+    const int info = 2251950;
+    const int warning = 1842428796;
+    const int error = 66247144;
 
     if (level.empty())
     {
         std::cout << "Level can't be empty" << std::endl;
         return ;
     }
-
-    // if (level == "DEBUG")
-    //     index = 0;
-    // else if (level == "INFO")
-    //     index = 1;
-    // else if (level == "WARNING")
-    //     index = 2;
-    // else if (level == )
-    //     index = 3;
-    // else
-    // {
-    //     std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
-    //     return ;
-    // }
-
-    switch (level) {
-        case "DEBUG":
+    
+    switch (hash_level(level)) {
+        case (debug):
             (this->*complaints[0])();
             /* fall through */
-        case "INFO":
+        case (info):
             (this->*complaints[1])();
             /* fall through */
-        case "WARNING":
+        case (warning):
             (this->*complaints[2])();
             /* fall through */
-        case "ERROR":
+        case (error):
             (this->*complaints[3])();
-            /* fall through */
+            break;
         default:
             std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
             break;

@@ -3,7 +3,7 @@ INCLUDES = .
 CXXFLAGS = -Wall -Wextra -Werror -MMD
 CXXFLAGS += -std=c++98 -I$(INCLUDES)
 
-NAME = harlfilter
+NAME = harlFilter
 SRCS = main.cpp Harl.cpp
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
