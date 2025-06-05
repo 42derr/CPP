@@ -5,7 +5,7 @@
 # include <iomanip>
 # include <string>
 # include <limits>
-# include "contact.hpp"
+# include "Contact.hpp"
 # include "phoneBookUtils.hpp"
 
 class PhoneBook {
@@ -24,3 +24,4 @@ public:
     void printMenu(void);
 };
 #endif
+

@@ -1,4 +1,4 @@
-# include "harl.hpp"
+# include "Harl.hpp"
 
 Harl::Harl() {
     complaints[0] = &Harl::debug;
@@ -34,34 +34,35 @@ void Harl::complain( std::string level ) {
         return ;
     }
 
-    if (level == "DEBUG")
-        index = 0;
-    else if (level == "INFO")
-        index = 1;
-    else if (level == "WARNING")
-        index = 2;
-    else if (level == "ERROR")
-        index = 3;
-    else
-    {
-        std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
-        return ;
-    }
+    // if (level == "DEBUG")
+    //     index = 0;
+    // else if (level == "INFO")
+    //     index = 1;
+    // else if (level == "WARNING")
+    //     index = 2;
+    // else if (level == )
+    //     index = 3;
+    // else
+    // {
+    //     std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
+    //     return ;
+    // }
 
-    switch (index) {
-        case 0:
+    switch (level) {
+        case "DEBUG":
             (this->*complaints[0])();
             /* fall through */
-        case 1:
+        case "INFO":
             (this->*complaints[1])();
             /* fall through */
-        case 2:
+        case "WARNING":
             (this->*complaints[2])();
             /* fall through */
-        case 3:
+        case "ERROR":
             (this->*complaints[3])();
             /* fall through */
         default:
+            std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
             break;
     }
 }

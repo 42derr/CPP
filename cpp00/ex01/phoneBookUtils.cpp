@@ -1,21 +1,18 @@
-#include "../includes/phoneBookUtils.hpp"
+#include "phoneBookUtils.hpp"
 
 void handleSigInt(int sig)
 {
-    std::cout << std::endl << "Caught SIGINT, Exiting..." << std::endl;
-    std::exit(128 + sig);
+    (void) sig;
+
+    std::cout << std::endl << "Caught SIGINT, invalid inputs!" << std::endl;
+    std::cout << "New input:" << std::endl;
 }
 
 void handleSigQuit(int sig)
 {
-    std::cout << std::endl << "Caught SIGQUIT, Exiting..." << std::endl;
-    std::exit(128 + sig);
-}
-
-void handleEOF(void)
-{
-    std::cout << std::endl << "Caught EOF, Exiting..." << std::endl;
-    std::exit(0);
+    (void) sig;
+    std::cout << std::endl << "Caught SIGQUIT, invalid inputs!" << std::endl;
+    std::cout << "New input:" << std::endl;
 }
 
 std::string trim(const std::string& str) {

@@ -1,25 +1,33 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror
-CXXFLAGS += -std=c++98
+
+INCLUDES= .
+ 
+SRCS = Contact.cpp PhoneBook.cpp phoneBookUtils.cpp main.cpp
+
+CXXFLAGS = -Wall -Wextra -Werror -MMD
+CXXFLAGS += -std=c++98 -I$(INCLUDES)
 
 NAME = phoneBook
-SRCS = src/contact.cpp src/phoneBook.cpp src/phoneBookUtils.cpp src/main.cpp
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) -Iincludes $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o: %.cpp
-	$(CXX) -Iincludes $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
+-include $(DEPS)
+
 .PHONY: all clean fclean re
+

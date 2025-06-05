@@ -1,6 +1,9 @@
 CXX = c++
-# CXXFLAGS = -Wall -Wextra -Werror
-CXXFLAGS += -std=c++98
+
+INCLUDES= .
+
+CXXFLAGS = -Wall -Wextra -Werror -MMD
+CXXFLAGS += -std=c++98 -I$(INCLUDES)
 
 NAME = account
 SRCS = Account.cpp tests.cpp
@@ -15,11 +18,13 @@ $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re

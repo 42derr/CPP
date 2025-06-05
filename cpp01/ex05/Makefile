@@ -1,25 +1,29 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror
-CXXFLAGS += -std=c++98
+INCLUDES = .
+CXXFLAGS = -Wall -Wextra -Werror -MMD
+CXXFLAGS += -std=c++98 -I$(INCLUDES)
 
 NAME = harl
-SRCS = main.cpp harl.cpp
+SRCS = main.cpp Harl.cpp
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) 
 
 re: fclean all
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re

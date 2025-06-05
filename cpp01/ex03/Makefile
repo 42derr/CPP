@@ -1,15 +1,17 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror
-CXXFLAGS += -std=c++98
+INCLUDES = .
+CXXFLAGS = -Wall -Wextra -Werror -MMD
+CXXFLAGS += -std=c++98 -I$(INCLUDES)
 
 NAME = human
 SRCS = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -18,8 +20,10 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(DEPS)
 
 re: fclean all
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re

@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     std::string stringTwo = argv[3];
     std::string replacedFileName = fileName + ".replace";
 
-    if (fileName.empty() || stringOne.empty() || stringTwo.empty())
+    if (fileName.empty() || stringOne.empty())
     {
         std::cout << "Arguments can't be empty string " << std::endl;
         return (1);

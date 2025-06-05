@@ -1,4 +1,4 @@
-# include "../includes/phoneBook.hpp"
+# include "PhoneBook.hpp"
 
 int main(int argc, char* argv[]) {
     PhoneBook phonebook;
@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
     (void)argv;
     if (argc > 1) {
         std::cerr << "Usage: ./phoneBook" << std::endl;
-        return 1;
+        return (1);
     }
     std::string command;
     std::signal(SIGINT, handleSigInt);
@@ -14,11 +14,17 @@ int main(int argc, char* argv[]) {
     while (true)
     {
         if (std::cin.eof())
-            handleEOF();
+        {
+            std::cout << std::endl << "Caught EOF, Exiting..." << std::endl;
+            return (0);
+        }
         phonebook.printMenu();
         std::cout << "> " ;
         if (!std::getline(std::cin, command))
-            handleEOF();
+        {
+            std::cout << std::endl << "Caught EOF, Exiting..." << std::endl;
+            return (0);
+        }
         if (command == "ADD")
             phonebook.addContact();
         else if (command == "SEARCH")
