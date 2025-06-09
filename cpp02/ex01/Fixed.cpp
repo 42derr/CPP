@@ -1,33 +1,32 @@
 #include "Fixed.hpp"
 
-Fixed::Fixed(): fixedPoint(0){
+Fixed::Fixed(): fixedPoint(0) {
     std::cout << "default constructor called" << std::endl;
-};
+}
 
-Fixed::Fixed(const int fixedPoint){
-    this->fixedPoint = fixedPoint << fractionalBits;
+Fixed::Fixed(const int value) : fixedPoint(value << fractionalBits) {
     std::cout << "int constructor called" << std::endl;
-};
+}
 
-Fixed::Fixed(const float fixedPoint){
-    this->fixedPoint = static_cast<int>(roundf(fixedPoint * (1 << fractionalBits)));
+Fixed::Fixed(const float value) 
+  : fixedPoint(static_cast<int>(roundf(value * (1 << fractionalBits)))) {
     std::cout << "float constructor called" << std::endl;
-};
+}
 
 Fixed::~Fixed(){
     std::cout << "destructor called" << std::endl;
 };
 
 Fixed::Fixed(const Fixed& other) {
-    fixedPoint = other.fixedPoint;
     std::cout << "Copy constructor called" << std::endl;
+    fixedPoint = other.fixedPoint;
 }
 
 Fixed& Fixed::operator=(const Fixed& other) {
     if (this == &other)
         return *this;
-    fixedPoint = other.fixedPoint;
     std::cout << "Copy assignment operator called" << std::endl;
+    fixedPoint = other.fixedPoint;
     return *this;
 }
 

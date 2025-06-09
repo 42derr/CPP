@@ -4,15 +4,14 @@ Fixed::Fixed(): fixedPoint(0){
     std::cout << "default constructor called" << std::endl;
 };
 
-Fixed::Fixed(const int fixedPoint){
-    this->fixedPoint = fixedPoint << fractionalBits;
+Fixed::Fixed(const int value) : fixedPoint(value << fractionalBits) {
     std::cout << "int constructor called" << std::endl;
-};
+}
 
-Fixed::Fixed(const float fixedPoint){
-    this->fixedPoint = static_cast<int>(roundf(fixedPoint * (1 << fractionalBits)));
+Fixed::Fixed(const float value) 
+  : fixedPoint(static_cast<int>(roundf(value * (1 << fractionalBits)))) {
     std::cout << "float constructor called" << std::endl;
-};
+}
 
 Fixed::~Fixed(){
     std::cout << "destructor called" << std::endl;
@@ -102,7 +101,7 @@ Fixed& Fixed::operator--(void) {
     return *this;
 }
 
-Fixed Fixed::operator--(int) { // how this work
+Fixed Fixed::operator--(int) {
     Fixed temp = *this;
 
     this->fixedPoint -= 1;

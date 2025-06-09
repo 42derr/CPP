@@ -1,5 +1,5 @@
-#ifndef POINT_H
-# define POINT_H
+#ifndef POINT_HPP
+# define POINT_HPP
 
 # include <iostream>
 # include "Fixed.hpp"
@@ -19,11 +19,6 @@ class Point {
         const Fixed& getX(void) const;
         const Fixed& getY(void) const;
 };
-
-typedef struct s_vector {
-    int x;
-    int y;
-} t_vector;
 
 int getCrossProduct(Point const a, Point const b, Point const p);
 bool bsp(Point const a, Point const b, Point const c, Point const point);
