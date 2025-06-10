@@ -25,21 +25,45 @@ void Harl::error( void ) {
     std::cout << "ERROR: " << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
-void Harl::complain( std::string level ) {
-    int index;
-
-    if (level == "DEBUG")
-        index = 0;
-    else if (level == "INFO")
-        index = 1;
-    else if (level == "WARNING")
-        index = 2;
-    else if (level == "ERROR")
-        index = 3;
-    else
+int hash_level(const std::string& s)
+{
+    int h = 0;
+    for (size_t i = 0; i < s.length(); i++)
     {
-        std::cout << "Sorry, level not found!" << std::endl;
+        h = 31 * h + s[i];
+    }
+    int valid = (s == "DEBUG" || s == "INFO" || s == "WARNING" || s == "ERROR");
+    int final_hash = h * valid;
+    return final_hash;
+}
+
+void Harl::complain( std::string level ) {
+    const  int debug = 64921139;
+    const int info = 2251950;
+    const int warning = 1842428796;
+    const int error = 66247144;
+
+    if (level.empty())
+    {
+        std::cout << "Level can't be empty" << std::endl;
         return ;
     }
-    (this->*complaints[index])();
+    
+    switch (hash_level(level)) {
+        case (debug):
+            (this->*complaints[0])();
+            break;
+        case (info):
+            (this->*complaints[1])();
+            break;
+        case (warning):
+            (this->*complaints[2])();
+            break;
+        case (error):
+            (this->*complaints[3])();
+            break;
+        default:
+            std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
+            break;
+    }
 }

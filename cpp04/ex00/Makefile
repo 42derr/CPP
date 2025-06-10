@@ -1,25 +1,29 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror
+INCLUDES = .
+CXXFLAGS = -Wall -Wextra -Werror -MMD
 CXXFLAGS += -std=c++98
 
 NAME = animal
-SRCS = src/main.cpp src/Animal.cpp src/Dog.cpp src/Cat.cpp src/WrongAnimal.cpp src/WrongCat.cpp
+SRCS = main.cpp Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) -Iincludes $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o: %.cpp
-	$(CXX) -Iincludes $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re

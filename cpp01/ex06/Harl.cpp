@@ -1,17 +1,5 @@
 # include "Harl.hpp"
 
-int hash_level(const std::string& s)
-{
-    int h = 0;
-    for (size_t i = 0; i < s.length(); i++)
-    {
-        h = 31 * h + s[i];
-    }
-    int valid = (s == "DEBUG" || s == "INFO" || s == "WARNING" || s == "ERROR");
-    int final_hash = h * valid;
-    return final_hash;
-}
-
 Harl::Harl() {
     complaints[0] = &Harl::debug;
     complaints[1] = &Harl::info;
@@ -35,6 +23,18 @@ void Harl::warning( void ) {
 
 void Harl::error( void ) {
     std::cout << "[ ERROR ]" << std::endl << "This is unacceptable! I want to speak to the manager now." << std::endl << std::endl;
+}
+
+int hash_level(const std::string& s)
+{
+    int h = 0;
+    for (size_t i = 0; i < s.length(); i++)
+    {
+        h = 31 * h + s[i];
+    }
+    int valid = (s == "DEBUG" || s == "INFO" || s == "WARNING" || s == "ERROR");
+    int final_hash = h * valid;
+    return final_hash;
 }
 
 void Harl::complain( std::string level ) {

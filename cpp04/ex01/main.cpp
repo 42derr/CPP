@@ -1,41 +1,57 @@
-#include "ScavTrap.hpp"
+#include "Animal.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 
-int main() {
-    std::cout << "Creating ScavTrap objects..." << std::endl;
+// int main() {
+//     const Animal* meta = new Animal();
+//     const Animal* j = new Dog();
+//     const Animal* i = new Cat();
 
-    // Default constructor test
-    ScavTrap scav1;
-    std::cout << std::endl;
+//     std::cout << j->getType() << " " << std::endl;
+//     std::cout << i->getType() << " " << std::endl;
 
-    // Parameterized constructor test
-    ScavTrap scav2("SC4V-TP");
-    std::cout << std::endl;
+//     i->makeSound(); // Should output "Meow!"
+//     j->makeSound(); // Should output "Woof woof!"
+//     meta->makeSound(); // Should output "I don't know who am I"
 
-    // Copy constructor test
-    ScavTrap scav3(scav2);
-    std::cout << std::endl;
+//     delete meta;
+//     delete j;
+//     delete i;
 
-    // Copy assignment operator test
-    ScavTrap scav4;
-    scav4 = scav2;
-    std::cout << std::endl;
+//     return 0;
+// }
 
-    // Attack test
-    scav2.attack("Enemy");
-    std::cout << std::endl;
-
-    // Energy depletion test
-    for (int i = 0; i < 10; i++) { // Depleting energy
-        scav2.attack("Dummy");
-    }
-    std::cout << std::endl;
-
-    // Guard Gate mode test
-    scav2.guardGate();
-    std::cout << std::endl;
-
-    // Destructor calls (will be automatically tested when objects go out of scope)
-    std::cout << "Exiting main and destroying objects..." << std::endl;
+int main()
+{
+    std::cout << "---- Correct Polymorphism ----" << std::endl;
+    const Animal* meta = new Animal();
+    const Animal* j = new Dog();
+    const Animal* i = new Cat();
     
+    std::cout << j->getType() << " " << std::endl;
+    std::cout << i->getType() << " " << std::endl;
+    std::cout << meta->getType() << " " << std::endl;
+    j->makeSound();  // Outputs "Woof woof"
+    i->makeSound();  // Outputs "Meow"
+    meta->makeSound(); // Outputs "I Don't know who am i"
+    
+    delete meta;
+    delete j;
+    delete i;
+
+    std::cout << "\n---- Wrong Polymorphism ----" << std::endl;
+    const WrongAnimal* wrong_meta = new WrongAnimal();
+    const WrongAnimal* wrong_cat = new WrongCat();
+    
+    std::cout << wrong_cat->getType() << " " << std::endl;
+    std::cout << wrong_meta->getType() << " " << std::endl;
+    wrong_cat->makeSound();  // Outputs "I am not an Animal :)" instead of "gebfwvdacsetbrvdc"
+    wrong_meta->makeSound(); // Outputs "I am not an Animal :)"
+
+    delete wrong_meta;
+    delete wrong_cat;
+
     return 0;
 }

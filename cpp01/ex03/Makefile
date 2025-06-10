@@ -17,10 +17,10 @@ $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean: clean
-	rm -f $(NAME) $(DEPS)
+	rm -f $(NAME)
 
 re: fclean all
 

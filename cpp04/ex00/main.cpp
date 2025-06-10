@@ -32,8 +32,9 @@ int main()
     
     std::cout << j->getType() << " " << std::endl;
     std::cout << i->getType() << " " << std::endl;
-    i->makeSound();  // Outputs "Meow"
+    std::cout << meta->getType() << " " << std::endl;
     j->makeSound();  // Outputs "Woof woof"
+    i->makeSound();  // Outputs "Meow"
     meta->makeSound(); // Outputs "I Don't know who am i"
     
     delete meta;
@@ -45,6 +46,7 @@ int main()
     const WrongAnimal* wrong_cat = new WrongCat();
     
     std::cout << wrong_cat->getType() << " " << std::endl;
+    std::cout << wrong_meta->getType() << " " << std::endl;
     wrong_cat->makeSound();  // Outputs "I am not an Animal :)" instead of "gebfwvdacsetbrvdc"
     wrong_meta->makeSound(); // Outputs "I am not an Animal :)"
 

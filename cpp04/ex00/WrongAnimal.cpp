@@ -1,6 +1,6 @@
 # include "WrongAnimal.hpp"
 
-WrongAnimal::WrongAnimal(): type("default") {
+WrongAnimal::WrongAnimal(): type("WrongDefault") {
     std::cout << "WrongAnimal default constructor called" << std::endl;
 }
 
@@ -23,7 +23,7 @@ WrongAnimal& WrongAnimal::operator=(const WrongAnimal& other) {
 }
 
 void WrongAnimal::makeSound() const{
-    std::cout << "I Don't know who am i" << std::endl;
+    std::cout << "Wrong, i don't know who am i" << std::endl;
 }
 
 std::string WrongAnimal::getType(void) const{
