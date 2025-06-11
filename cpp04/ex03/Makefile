@@ -3,8 +3,8 @@ INCLUDES = .
 CXXFLAGS = -Wall -Wextra -Werror -MMD
 CXXFLAGS += -std=c++98
 
-NAME = brain
-SRCS = main.cpp Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp
+NAME = interfaces
+SRCS = main.cpp 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 

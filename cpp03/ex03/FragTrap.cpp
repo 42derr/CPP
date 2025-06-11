@@ -16,6 +16,14 @@ FragTrap::FragTrap(std::string name): ClapTrap(name){
     std::cout << "FragTrap " << this->name << " constructor called" << std::endl;
 };
 
+FragTrap::FragTrap(std::string name, int spes): ClapTrap(name){
+    (void) spes;
+    this->hitPoints = 100;
+    this->attackDamage = 30;
+
+    std::cout << "FragTrap " << this->name << " constructor called" << std::endl;
+};
+
 FragTrap::~FragTrap(){
     std::cout << "FragTrap " << this->name << " destructor called" << std::endl;
 };

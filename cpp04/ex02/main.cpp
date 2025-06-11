@@ -7,6 +7,7 @@
 
 int main() {
     const int N = 10;
+    // Animal animals;
     Animal* animals[N];
 
     // Half dogs, half cats

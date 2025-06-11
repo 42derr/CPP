@@ -18,6 +18,13 @@ ScavTrap::ScavTrap(std::string name): ClapTrap(name){
     std::cout << "ScavTrap " << this->name << " constructor called" << std::endl;
 };
 
+ScavTrap::ScavTrap(std::string name, int spes): ClapTrap(name){
+    (void) spes;
+    this->energyPoints = 50;
+
+    std::cout << "ScavTrap " << this->name << " constructor called" << std::endl;
+};
+
 ScavTrap::~ScavTrap(){
     std::cout << "ScavTrap " << this->name << " destructor called" << std::endl;
 };

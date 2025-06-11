@@ -1,26 +1,26 @@
 # include "DiamondTrap.hpp"
 
-DiamondTrap::DiamondTrap(): ClapTrap("DefaultDia_clap_name"), ScavTrap("DefaultDia_clap_name"), FragTrap("DefaultDia_clap_name")
+DiamondTrap::DiamondTrap(): ClapTrap("DefaultDia_clap_name"), ScavTrap("DefaultDia_clap_name", 1), FragTrap("DefaultDia_clap_name", 1)
 {
     this->name = "DefaultDia";
     this->hitPoints = FragTrap::hitPoints;
     this->energyPoints = ScavTrap::energyPoints;
     this->attackDamage = FragTrap::attackDamage;
-
     std::cout << "DiamondTrap " << this->name << " default constructor called" << std::endl;
-
-    std::cout << "HP: " << this->hitPoints 
-    << ", Energy: " << this->energyPoints 
-    << ", Attack: " << this->attackDamage << std::endl;
+    // std::cout << "HP: " << this->hitPoints 
+    // << ", Energy: " << this->energyPoints 
+    // << ", Attack: " << this->attackDamage << std::endl;
 };
 
-DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name"){
+DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name"), ScavTrap(name, 1), FragTrap(name, 1){
     this->name = name;
     this->hitPoints = FragTrap::hitPoints;
     this->energyPoints = ScavTrap::energyPoints;
     this->attackDamage = FragTrap::attackDamage;
-
     std::cout << "DiamondTrap " << this->name << " constructor called" << std::endl;
+    // std::cout << "HP: " << this->hitPoints 
+    // << ", Energy: " << this->energyPoints 
+    // << ", Attack: " << this->attackDamage << std::endl;
 };
 
 DiamondTrap::~DiamondTrap(){
