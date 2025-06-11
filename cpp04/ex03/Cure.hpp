@@ -2,7 +2,7 @@
 # define CURE_HPP
 
 # include <iostream>
-# include "Amateria.hpp"
+# include "AMateria.hpp"
 
 class Cure : public AMateria
 {
@@ -13,6 +13,7 @@ class Cure : public AMateria
         Cure(const Cure& other);
         Cure& operator=(const Cure& other);
         AMateria* clone() const;
+        void use(ICharacter& target);
 };
 
 #endif

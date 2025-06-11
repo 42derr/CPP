@@ -16,7 +16,7 @@ AMateria& AMateria::operator=(const AMateria& other) {
     if (this == &other)
         return *this;
 
-    type = other.type;
+    // Not copying because object already exists, type fixed
     std::cout << "AMateria copy assignment operator called" << std::endl;
     return *this;
 }
@@ -30,9 +30,6 @@ std::string const & AMateria::getType() const{
 }
 
 void AMateria::use(ICharacter& target){
-    if (getType() == "ice")
-        std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
-    else if (getType() == "ice")
-        std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
+    (void) target;
 }
 
