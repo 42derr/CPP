@@ -52,7 +52,7 @@ void MateriaSource::learnMateria(AMateria* m)
     {
         if (_templates[i] == NULL)
         {
-            _templates[i] = m->clone();
+            _templates[i] = m;// check this not cloned
             std::cout << "Materia learned at index " << i << "." << std::endl;
             return ;
         }

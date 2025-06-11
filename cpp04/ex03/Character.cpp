@@ -56,7 +56,7 @@ Character& Character::operator=(const Character& other) {
         if (inventory[i])
             delete inventory[i];
         if (other.inventory[i])
-            inventory[i] = other.inventory[i].clone();
+            inventory[i] = other.inventory[i]->clone();
         else
             inventory[i] = NULL;
     }
