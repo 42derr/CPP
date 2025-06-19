@@ -20,7 +20,6 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
     if (this == &other)
         return *this;
     std::cout << "PresidentialPardonForm copy assignment operator called" << std::endl;
-    std::cout << "No copy logic implemented because AForm have const member" << std::endl;
     return *this;
 }
 

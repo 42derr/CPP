@@ -14,10 +14,6 @@ class ScalarConverter {
     public:
         static void convert(std::string literal);
 
-    class ScalarConverterException : public std::exception {
-        public:
-            const char* what() const throw();
-    };
 };
 
 #endif

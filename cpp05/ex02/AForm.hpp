@@ -12,12 +12,12 @@ class AForm {
         bool isSigned;
         const int signGrade;
         const int executeGrade;
+        AForm& operator=(const AForm& other);
     public:
         AForm();
         AForm(std::string name, int signGrade, int executeGrade);
         virtual ~AForm();
         AForm(const AForm& other);
-        AForm& operator=(const AForm& other);
         std::string getName(void) const;
         bool getIsSigned(void) const;
         int getSignGrade(void) const;

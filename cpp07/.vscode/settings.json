@@ -1,10 +1,8 @@
 {
     "files.associations": {
-        "__hash_table": "cpp",
-        "string": "cpp",
-        "string_view": "cpp",
-        "unordered_map": "cpp",
+        "iostream": "cpp",
         "__bit_reference": "cpp",
+        "__hash_table": "cpp",
         "__locale": "cpp",
         "__node_handle": "cpp",
         "__split_buffer": "cpp",
@@ -27,7 +25,6 @@
         "initializer_list": "cpp",
         "ios": "cpp",
         "iosfwd": "cpp",
-        "iostream": "cpp",
         "istream": "cpp",
         "limits": "cpp",
         "locale": "cpp",
@@ -40,8 +37,12 @@
         "stack": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
         "typeinfo": "cpp",
+        "unordered_map": "cpp",
         "variant": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "*.tpp": "cpp"
     }
 }

@@ -20,7 +20,6 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
     if (this == &other)
         return *this;
     std::cout << "ShrubberyCreationForm copy assignment operator called" << std::endl;
-    std::cout << "No copy logic implemented because AForm have const member" << std::endl;
     return *this;
 }
 

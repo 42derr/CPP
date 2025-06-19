@@ -20,7 +20,6 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
     if (this == &other)
         return *this;
     std::cout << "RobotomyRequestForm copy assignment operator called" << std::endl;
-    std::cout << "No copy logic implemented because AForm have const member" << std::endl;
     return *this;
 
 }

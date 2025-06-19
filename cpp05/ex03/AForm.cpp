@@ -28,7 +28,6 @@ AForm& AForm::operator=(const AForm& other) {
     if (this == &other)
         return *this;
     std::cout << "AForm copy assignment operator called" << std::endl;
-    std::cout << "No copy logic implemented because 'name', 'signGrade', 'executeGrade' is a const member" << std::endl;
     return *this;
 }
 

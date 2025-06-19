@@ -24,7 +24,6 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
     if (this == &other)
         return *this;
     std::cout << "Bureaucrat copy assignment operator called" << std::endl;
-    std::cout << "No copy logic implemented because 'name' is a const member" << std::endl;
     return *this;
 }
 
