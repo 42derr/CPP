@@ -38,7 +38,7 @@ void toChar(double d)
 
 void toInt(double d)
 {
-    if (d > std::numeric_limits<int>::max() || d < std::numeric_limits<int>::lowest()) {
+    if (d > std::numeric_limits<int>::max() || d < std::numeric_limits<int>::min()) {
         std::cout << "int: impossible" << std::endl;
         return ;
     }
@@ -54,7 +54,7 @@ void toDouble(double d)
 
 void toFloat(double d)
 {
-    if (d > std::numeric_limits<float>::max() || d < std::numeric_limits<float>::lowest()) {
+    if (d > std::numeric_limits<float>::max() || d < -std::numeric_limits<float>::max()) {
         std::cout << "float: impossible" << std::endl;
         return ;
     }
@@ -132,13 +132,21 @@ bool isValidNumber(const std::string& literal) {
     return digit_found;
 }
 
+double stringToDouble(std::string str) {
+    double d;
+
+    std::stringstream ss(str);
+    ss >> d;
+    return d;
+}
+
 bool isNumber(std::string literal)
 {
     if (!isValidNumber(literal))
         return false;
 
     try {
-        double d = std::stod(literal);
+        double d = stringToDouble(literal);
         if (std::isinf(d))
             return false;
         toChar(d);

@@ -1,0 +1,6 @@
+1	Read bitcoin database CSV	std::ifstream, std::map
+2	Read input file line by line	Skip header
+3	Validate line: correct format, valid date, value in range	Regex or manual check
+4	Look up date in map (or nearest earlier)	std::map.lower_bound() logic
+5	Multiply value by rate, print result	Format: date => value = result
+6	Print errors for bad inputs	Clear and specific messages

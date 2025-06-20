@@ -2,6 +2,8 @@
 # define GENERATE_HPP
 
 # include <iostream>
+# include <cstdlib>
+# include <ctime>
 # include "A.hpp"
 # include "B.hpp"
 # include "C.hpp"

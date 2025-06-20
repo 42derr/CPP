@@ -1,5 +1,8 @@
 #include <iostream>
-#include <list>
+#include <vector>
+#include <deque>
+#include <list> 
+#include <exception>
 #include "easyfind.hpp"
 
 int main()
@@ -50,16 +53,6 @@ int main()
     }
     catch (const std::exception& e) {
         std::cout << "List: " << e.what() << std::endl;
-    }
-
-    std::cout << std::endl << "#####Testing Array#####" << std::endl;
-    std::array<int, 5> arr = {10, 20, 30, 40, 50};
-    try {
-        easyfind(arr, 40); 
-        easyfind(arr, 99);
-
-    } catch (const std::exception& e) {
-        std::cout << e.what() << std::endl;
     }
 
     return 0;
