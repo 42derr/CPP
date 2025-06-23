@@ -1,4 +1,5 @@
 #include "BitcoinExchange.hpp"
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -8,12 +9,15 @@ int main(int argc, char *argv[])
         return (1);
     }
 
-    std::map<std::string, double> btcPrices;
-    if (loadDatabase(btcPrices))
-        return (1);
-    if (loadInput(btcPrices, argv[1]))
-        return (1);
-    return (0);
+    try {
+        BitcoinExchange btc;
+
+        btc.loadInput(argv[1]);
+    }
+    catch (const std::exception& e) {
+        std::cerr <<  e.what() << std::endl;
+    }
+    return 0;
 }
 
 /*

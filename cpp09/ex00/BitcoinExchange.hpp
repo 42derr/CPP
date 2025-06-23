@@ -9,15 +9,26 @@
 # include <cctype>
 # include <cstdlib>
 
-int stringToInt(const std::string& str);
-double stringToDouble(std::string str);
-int loadDatabase(std::map<std::string, double>& btcPrices);
-int checkPipe(size_t pos, std::string str);
-int validateDate(const std::string& date);
-int checkDate(std::string date);
-int checkNumber(const std::string& value);
-int checkValue(std::string value);
-void searchValue(const std::map<std::string, double>& btcPrices, const std::string& date, double value);
-int loadInput(std::map<std::string, double>& btcPrices, std::string input);
+class BitcoinExchange {
+    private:
+        std::map<std::string, double> _btcPrices;
+        bool validateDateFormat(const std::string& date) const;
+        bool isValidDate(const std::string& date) const;
+        bool isValidValue(const std::string& value) const;
+        bool isValidNumber(const std::string& value) const;
+        bool isPipeFormatCorrect(const std::string& line, size_t pipePos) const;
+        int stringToInt(const std::string& str) const;
+        double stringToDouble(const std::string& str) const;
+        void searchValue(const std::string& date, const double& value);
+
+    public:
+        BitcoinExchange();
+        ~BitcoinExchange();
+        BitcoinExchange(const BitcoinExchange& other);
+        BitcoinExchange& operator=(const BitcoinExchange& other);
+        void loadDatabase();
+        void loadInput(const std::string& inputFile);
+
+};
 
 #endif

@@ -1,22 +1,31 @@
 # include "BitcoinExchange.hpp"
 
-int stringToInt(const std::string& str) {
-    return std::atoi(str.c_str());
+BitcoinExchange::BitcoinExchange() {
+    std::cout << "BitcoinExchange default constructor called" << std::endl;
+    loadDatabase();
 }
 
-double stringToDouble(std::string str) {
-    double d;
-
-    std::stringstream ss(str);
-    ss >> d;
-    return d;
+BitcoinExchange::~BitcoinExchange() {
+    std::cout << "BitcoinExchange destructor called" << std::endl;
 }
 
-int loadDatabase(std::map<std::string, double>& btcPrices) {
+BitcoinExchange::BitcoinExchange(const BitcoinExchange& other){
+    std::cout << "BitcoinExchange copy constructor called" << std::endl;
+    this->_btcPrices = other._btcPrices;
+}
+
+BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {
+    std::cout << "BitcoinExchange copy assignment operator called" << std::endl;
+    if (this == &other)
+        return *this;
+    this->_btcPrices = other._btcPrices;
+    return *this;
+}
+
+void BitcoinExchange::loadDatabase() {
     std::ifstream dataFile("data.csv");
     if (!dataFile) {
-        std::cerr << "Error: could not open file." << std::endl;
-        return (1);
+        throw std::runtime_error("Error: could not open file.");
     }
 
     std::string line;
@@ -25,145 +34,39 @@ int loadDatabase(std::map<std::string, double>& btcPrices) {
         size_t pos = line.find(',');
         std::string date = line.substr(0, pos);
         std::string price = line.substr(pos + 1);
-        btcPrices[date] = stringToDouble(price);
+        _btcPrices[date] = stringToDouble(price);
     }
-    return (0);
 }
 
-int checkPipe(size_t pos, std::string str)
-{
-    if (pos == std::string::npos)
-    {
-        std::cerr << "Error: '|' not found in the line." << std::endl;
-        return (1);
+void BitcoinExchange::loadInput(const std::string& input) {
+    std::ifstream inputFile(input.c_str());
+    if (!inputFile) {
+        throw std::runtime_error("Error: could not open file.");
     }
-    if (str[pos - 1] != ' ' || str[pos + 1] != ' ')
-    {
-        std::cerr << "Error: 'date | value'" << std::endl;
-        return (1); 
-    }
-    return (0);
-}
-
-int validateDate(const std::string& date)
-{
-    if (date.length() != 10)
-        return 1;
-
-    if (date[4] != '-' || date[7] != '-')
-        return 1;
-    for (int i = 0; i < 4; i++)
-    {
-        if (!std::isdigit(date[i]))
-            return 1;
-    }
-    for (int i = 5; i < 7; i++)
-    {
-        if (!std::isdigit(date[i]))
-            return 1;
-    }
-    for (int i = 8; i < 10; i++)
-    {
-        if (!std::isdigit(date[i]))
-            return 1;
-    }
-
-    int month = stringToInt(date.substr(5, 2));
-    int day = stringToInt(date.substr(8, 2));
-
-    if (month < 1 || month > 12)
-        return 1;
-
-    int daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
-    if (day < 1 || day > daysInMonth[month - 1])
-        return 1;
-
-    return 0;
-}
-
-
-int checkDate(std::string date)
-{
-    if (date.empty())
-    {
-        std::cerr << "Error: date can't be empty" << std::endl;
-        return (1);
-    }
-    if (validateDate(date))
-    {
-        std::cerr << "Error: bad input => " << date << std::endl;
-        return (1);
-    }
-    return (0);
-}
-
-int checkNumber(const std::string& value){
-
-    bool dot = false;
-    size_t i = 0;
-
-    if (value[i] == '-' || value[i] == '+')
-    {
-        i++;
-        if (i == value.length())
-            return 1;
-    }
-
-    for (; i < value.length(); i++)
-    {
-        if (value[i] == '.')
-        {
-            if (dot)
-                return (1);
-            dot = true;
+    std::string line;
+    std::getline(inputFile, line);
+    while (std::getline(inputFile, line)) {
+        size_t pos = line.find('|');
+        if (isPipeFormatCorrect(line, pos) == false)
             continue;
-        }
-        else if (!std::isdigit(value[i]))
-            return (1);
+        std::string date = line.substr(0, pos - 1);
+        if (isValidDate(date) == false)
+            continue;
+        std::string value = line.substr(pos + 2);
+        if (isValidValue(value) == false)
+            continue;
+        searchValue(date, stringToDouble(value));
     }
-    return (0);
 }
 
-int checkValue(std::string value){
-    if (value.empty())
-    {
-        std::cerr << "Error: value can't be empty" << std::endl;
-        return (1);
-    }
-    if (checkNumber(value))
-    {
-        std::cerr << "Error: bad input => " << value << std::endl;
-        return (1);
-    }
-    double d = stringToDouble(value);
-    if (d < 0)
-    {
-        std::cerr << "Error: not a positive number." << std::endl;
-        return (1);
-    }
-    else if (d > 1000)
-    {
-        std::cerr << "Error: too large a number." << std::endl;
-        return (1); 
-    }
-    return (0);
-}
+void BitcoinExchange::searchValue(const std::string& date, const double& value) {
 
+    std::map<std::string, double>::const_iterator it = _btcPrices.lower_bound(date);
 
-// study this
-void searchValue(const std::map<std::string, double>& btcPrices, const std::string& date, double value) {
-    if (btcPrices.empty()) {
-        std::cerr << "Error: no data available.\n";
-        return;
-    }
-
-    std::map<std::string, double>::const_iterator it = btcPrices.lower_bound(date);
-
-    if (it == btcPrices.end()) {
-        it = --btcPrices.end();
+    if (it == _btcPrices.end()) {
+        it = --_btcPrices.end();
     } else if (it->first != date) {
-        if (it == btcPrices.begin()) {
+        if (it == _btcPrices.begin()) {
             std::cerr << "Error: no earlier date available.\n";
             return;
         }
@@ -176,25 +79,134 @@ void searchValue(const std::map<std::string, double>& btcPrices, const std::stri
     std::cout << it->first << " => " << value << " = " << finalPrice << '\n';
 }
 
-int loadInput(std::map<std::string, double>& btcPrices, std::string input) {
-    std::ifstream inputFile(input.c_str());
-    if (!inputFile) {
-        std::cerr << "Error: could not open file." << std::endl;
-        return (1);
+
+bool BitcoinExchange::isPipeFormatCorrect(const std::string& line, size_t pipePos) const {
+    if (pipePos == std::string::npos || pipePos == 0 || pipePos + 1 >= line.size())
+    {
+        std::cerr << "Error: '|' not found or misplaced in the line." << std::endl;
+        return false;
     }
-    std::string line;
-    std::getline(inputFile, line);
-    while (std::getline(inputFile, line)) {
-        size_t pos = line.find('|');
-        if (checkPipe(pos, line))
-            continue;
-        std::string date = line.substr(0, pos - 1);
-        if (checkDate(date))
-            continue;
-        std::string value = line.substr(pos + 2);
-        if (checkValue(value))
-            continue;
-        searchValue(btcPrices, date, stringToDouble(value));
+    if (line[pipePos - 1] != ' ' || line[pipePos + 1] != ' ')
+    {
+        std::cerr << "Error: 'date | value'" << std::endl;
+        return (false); 
     }
-    return (0);
+    return (true);
+}
+
+bool BitcoinExchange::validateDateFormat(const std::string& date) const {
+    if (date.length() != 10)
+        return (false);
+
+    if (date[4] != '-' || date[7] != '-')
+        return (false);
+    for (int i = 0; i < 4; i++)
+    {
+        if (!std::isdigit(date[i]))
+            return (false);
+    }
+    for (int i = 5; i < 7; i++)
+    {
+        if (!std::isdigit(date[i]))
+            return (false);
+    }
+    for (int i = 8; i < 10; i++)
+    {
+        if (!std::isdigit(date[i]))
+            return (false);
+    }
+
+    int month = stringToInt(date.substr(5, 2));
+    int day = stringToInt(date.substr(8, 2));
+
+    if (month < 1 || month > 12)
+        return (false);
+
+    int daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    if (day < 1 || day > daysInMonth[month - 1])
+        return (false);
+
+    return (true);
+}
+
+
+bool BitcoinExchange::isValidDate(const std::string& date) const {
+    if (date.empty())
+    {
+        std::cerr << "Error: date can't be empty" << std::endl;
+        return (false);
+    }
+    if (validateDateFormat(date) == false)
+    {
+        std::cerr << "Error: bad input => " << date << std::endl;
+        return (false);
+    }
+    return (true);
+}
+
+bool BitcoinExchange::isValidNumber(const std::string& value) const {
+    if (value.empty())
+        return false;
+
+    bool dot = false;
+    size_t i = 0;
+
+    if (value[i] == '-' || value[i] == '+')
+    {
+        i++;
+        if (i == value.length())
+            return (false);
+    }
+
+    for (; i < value.length(); i++)
+    {
+        if (value[i] == '.')
+        {
+            if (dot)
+                return (false);
+            dot = true;
+            continue;
+        }
+        else if (!std::isdigit(value[i]))
+            return (false);
+    }
+    return (true);
+}
+
+bool BitcoinExchange::isValidValue(const std::string& value) const {
+    if (value.empty())
+    {
+        std::cerr << "Error: value can't be empty" << std::endl;
+        return (false);
+    }
+    if (isValidNumber(value) == false)
+    {
+        std::cerr << "Error: bad input => " << value << std::endl;
+        return (false);
+    }
+    double d = stringToDouble(value);
+    if (d < 0)
+    {
+        std::cerr << "Error: not a positive number." << std::endl;
+        return (false);
+    }
+    else if (d > 1000)
+    {
+        std::cerr << "Error: too large a number." << std::endl;
+        return (false); 
+    }
+    return (true);
+}
+
+int BitcoinExchange::stringToInt(const std::string& str) const{
+    return std::atoi(str.c_str());
+}
+
+double BitcoinExchange::stringToDouble(const std::string& str) const{
+    double d;
+
+    std::stringstream ss(str);
+    ss >> d;
+    return d;
 }
