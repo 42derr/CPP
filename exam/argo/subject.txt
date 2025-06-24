@@ -1,0 +1,79 @@
+******************************************************************************
+
+                                  argo
+
+******************************************************************************
+
+• Summary:
+You must implement a lightweight JSON parser named **argo** that can read 
+JSON-formatted input from a stream and parse integers, strings, and maps (objects).
+
+Your parser must handle dynamic memory allocation, error checking, and
+recursive parsing for nested objects.
+
+• Goal:
+Given a stream of JSON data, you must:
+1. Read and parse JSON strings, numbers, and maps.
+2. Build an internal representation using your own data structures.
+3. Handle malformed input gracefully.
+
+• Requirements:
+- Parse from a stream (e.g., file descriptor or string buffer).
+- Support the following JSON types:
+    - Integer (e.g., `42`)
+    - String (e.g., `"hello"`)
+    - Map/Object (e.g., `{ "key": "value", "num": 123 }`)
+- Handle arbitrary nesting: e.g., `{ "a": { "b": "c" } }`
+- All memory must be dynamically allocated.
+- Return structured data you can walk through or print.
+
+• Data structure example:
+
+    typedef enum { JSON_STRING, JSON_INT, JSON_OBJECT } t_json_type;
+
+    typedef struct s_json_node {
+        char *key;
+        t_json_type type;
+        union {
+            char *str_val;
+            int int_val;
+            struct s_json_node **children;
+        };
+        int child_count;
+    } t_json_node;
+
+• Allowed functions:
+    malloc, free, read, write, isspace, isdigit, atoi, strcmp, strncmp
+
+• Forbidden:
+- External libraries (cJSON, json-c, etc.)
+- Standard file I/O (fopen, fread, etc.)
+- Regex, eval, or parsing generators
+
+• Example input:
+
+    {"name": "42", "level": 5, "data": {"score": 1337}}
+
+• Output structure (for testing):
+    key: name, value: 42 (string)  
+    key: level, value: 5 (int)  
+    key: data, value: { score: 1337 }
+
+• Evaluation Criteria:
+
+    - Compilation:         [ ] OK    [ ] KO
+    - Correct parsing:     [ ] OK    [ ] KO
+    - Nested maps:         [ ] OK    [ ] KO
+    - Memory management:   [ ] OK    [ ] KO
+    - Error handling:      [ ] OK    [ ] KO
+    - Data representation: [ ] OK    [ ] KO
+    - Code clarity:        [ ] OK    [ ] KO
+
+• Tips:
+- Use a state machine or recursive descent parser.
+- Skip whitespace properly.
+- Always check for memory allocation errors.
+- Validate syntax carefully (`{`, `}`, `:`, `,`).
+
+******************************************************************************
+
