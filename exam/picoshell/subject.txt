@@ -1,0 +1,67 @@
+******************************************************************************
+
+                                picoshell
+
+******************************************************************************
+
+• Summary:
+You must implement a minimal UNIX shell that can execute piped commands.
+Each command should run in its own process, and the commands must be connected
+using UNIX pipes to pass input/output between them.
+
+• Goal:
+Given an array of commands (each command being an array of strings), execute 
+them as a pipeline, such that the output of one command becomes the input of 
+the next.
+
+• Instructions:
+- You must handle a list of commands chained by pipes (e.g., "ls -l | grep txt | wc -l").
+- Each command must be executed using `fork()` and `execve()`.
+- Pipes (`pipe()`) must be used to connect the processes.
+- You must handle file descriptor redirection using `dup()` or `dup2()` correctly.
+- Wait for all child processes using `waitpid()`.
+
+• Functionality Requirements:
+- Your program must handle at least 3 piped commands.
+- You must close all unused file descriptors in both the parent and the child.
+- Do not leak memory or leave zombie processes.
+- Do not use `system()` or other high-level wrappers.
+
+• Allowed functions:
+
+    malloc, free, write, close, fork, waitpid, signal,
+    kill, exit, chdir, execve, dup, dup2, pipe, strcmp, strncmp
+
+• Forbidden:
+- system
+- popen
+- posix_spawn or any non-listed exec function
+- I/O functions like fopen, fread, getline, etc.
+- Shell parsing or globbing (e.g., *, ~, >, <)
+
+• Example Scenario:
+
+    const char *cmd1[] = {"ls", "-l", NULL};
+    const char *cmd2[] = {"grep", "txt", NULL};
+    const char *cmd3[] = {"wc", "-l", NULL};
+
+    picoshell(cmd1, cmd2, cmd3); // executes: ls -l | grep txt | wc -l
+
+• Evaluation:
+
+    - Compilation:        [ ] OK    [ ] KO
+    - Single command:     [ ] OK    [ ] KO
+    - Two-pipe support:   [ ] OK    [ ] KO
+    - File descriptor mgmt: [ ] OK    [ ] KO
+    - Child wait/exit:    [ ] OK    [ ] KO
+    - No leaks/zombies:   [ ] OK    [ ] KO
+    - Clean code:         [ ] OK    [ ] KO
+
+• Tips:
+- For N commands, you need N-1 pipes.
+- You’ll need a loop to fork each child and set up its stdin/stdout.
+- Always `close()` the pipe ends you're not using.
+- Use `execve()` with the full path or use `chdir()` if needed.
+
+******************************************************************************
+

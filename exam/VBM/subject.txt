@@ -1,0 +1,81 @@
+******************************************************************************
+
+                        Very Basic Calculator (VBM)
+
+******************************************************************************
+
+• Summary:
+You must implement a very basic calculator that parses a mathematical 
+expression into a binary tree and then evaluates it recursively.
+
+This project focuses on string parsing, recursion, tree structures, and evaluation.
+
+• Goal:
+Given a valid infix mathematical expression (e.g., "3 + 4 * (2 - 1)"), 
+you must:
+1. Parse the string into a binary expression tree.
+2. Evaluate the tree to compute the result.
+
+• Requirements:
+- The input is a null-terminated string containing digits and `+ - * / ( )`.
+- You must respect operator precedence and parentheses.
+- Each operator and operand must be represented as a node in the binary tree.
+- The final result must be returned as an `int`.
+
+• Function Prototype:
+int vbm_eval(const char *expression);
+
+• Allowed operators:
+    + (addition)
+    - (subtraction)
+    * (multiplication)
+    / (integer division)
+
+• Allowed functions:
+    malloc, free, isdigit, atoi, printf (for debugging)
+
+• Forbidden:
+- system
+- eval, exec or similar interpreters
+- External libraries (math.h, regex, etc.)
+
+• Example:
+
+    Input: "3 + 4 * (2 - 1)"
+    Tree:
+             +
+           /   \
+          3     *
+               / \
+              4   -
+                 / \
+                2   1
+
+    Output: 7
+
+• Evaluation Criteria:
+
+    - Compilation:             [ ] OK    [ ] KO
+    - Correct parsing:         [ ] OK    [ ] KO
+    - Operator precedence:     [ ] OK    [ ] KO
+    - Parenthesis support:     [ ] OK    [ ] KO
+    - Memory management:       [ ] OK    [ ] KO
+    - Correct result:          [ ] OK    [ ] KO
+    - Code structure & clarity:[ ] OK    [ ] KO
+
+• Tips:
+- Use a recursive descent parser or shunting yard algorithm to parse.
+- Define a struct like:
+
+      typedef struct s_node {
+          char op; // '+', '-', '*', '/' or '\0' for leaf
+          int value; // only used for leaves
+          struct s_node *left;
+          struct s_node *right;
+      } t_node;
+
+- After building the tree, recursively evaluate it.
+- Free all allocated memory after evaluation.
+
+******************************************************************************
+
