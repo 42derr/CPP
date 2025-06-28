@@ -78,25 +78,6 @@ void PmergeMe::copyMultiple(size_t insertPos, size_t copyFrom, size_t size) {
     _vec.erase(_vec.begin() + eraseStart, _vec.begin() + eraseStart + size);
 }
 
-size_t indexJacobsthal(size_t max_value) {
-    size_t j0 = 0;
-    size_t j1 = 1;
-    size_t jn = 1;
-    size_t n = 1;
-
-    while (true) {
-        jn = j1 + 2 * j0;
-        size_t diff = jn - j1;
-        if (diff > max_value)
-            break;
-        j0 = j1;
-        j1 = jn;
-        n++;
-    }
-
-    return n - 1;
-}
-
 size_t insertJacobsthal(size_t index) {
     if (index == 0)
         return 0;
@@ -116,77 +97,107 @@ size_t insertJacobsthal(size_t index) {
     return jn;
 }
 
+void PmergeMe::insertAIntoMain(size_t& pend_start, size_t& pend_end, size_t groupSize) {
+    size_t main_end = pend_start - 1;
+    size_t numPairs = (pend_end - pend_start + 1) / (2 * groupSize);
+
+    for (size_t i = 0; i < numPairs; i++){
+        size_t a_pos = pend_start + groupSize;
+        copyMultiple(main_end + 1, a_pos, groupSize);
+        pend_start += groupSize * 2;
+        main_end += groupSize;
+    }
+    pend_start = main_end + 1;
+}
+
 void PmergeMe::insertPendIntoMain(
-    size_t main_start,
-    size_t main_end,
     size_t pend_start,
     size_t pend_end,
     size_t groupSize
 ) {
-    (void) main_start;
-    size_t numPairs = (pend_end - pend_start + 1) / (2 * groupSize);
+    // insert a into main this is ok
+    insertAIntoMain(pend_start, pend_end, groupSize);
 
-    for (size_t i = 0; i < numPairs; i++){
-        size_t copyFrom = pend_start + groupSize;
-        copyMultiple(main_end + 1, copyFrom, groupSize);
-        pend_start += groupSize * 2;
-        main_end += groupSize;
+    // first useable jacobsthal number
+    size_t jacobIndex = 3;
+    size_t jacobBound = insertJacobsthal(jacobIndex);
+
+    // this is not ok on 2
+    while (true)
+    {
+        size_t insertCount = insertJacobsthal(jacobIndex) - insertJacobsthal(jacobIndex - 1);
+
+        for (size_t k = 0; k < insertCount; ++k) {
+            int currentPos = static_cast<int>(pend_start + groupSize * (insertCount - k) - 1);
+            int currentMax = _vec[currentPos];
+            bool inserted = false;
+
+            for (size_t m = 0; m < jacobBound; ++m) {
+                size_t comparePos = (1 + m) * groupSize - 1;
+                int compareMax = _vec[comparePos];
+
+                if (compareMax >= currentMax) {
+                    copyMultiple(comparePos - (groupSize - 1), currentPos - (groupSize - 1), groupSize);
+                    pend_start += groupSize;
+                    inserted = true;
+                    break;
+                }
+            }
+
+            if (!inserted) {
+                copyMultiple(pend_start - 1, pend_start + groupSize - 1, groupSize);
+                pend_start += groupSize;
+            }
+
+            if (pend_start > pend_end)
+                return;
+
+        }
+        if (jacobIndex == 3)
+            return ;
+
+        jacobIndex++;
+        jacobBound = insertJacobsthal(jacobIndex);
+
+        // Not enough pend elements left for next Jacobsthal range
+        if (pend_end - pend_start + 1 < groupSize * (insertJacobsthal(jacobIndex) - insertJacobsthal(jacobIndex - 1))) {
+            break;
+        }
     }
-
-    pend_start = main_end + 1;
-
-    size_t pend_size = (pend_end - pend_start + 1) / groupSize;
-    
-    size_t jacobsthalIndex = indexJacobsthal(pend_size); // first useful is 3 because 1-1 = 0
-    size_t jacobsthalInsert = insertJacobsthal(jacobsthalIndex) - insertJacobsthal(jacobsthalIndex - 1); // check negative
-
-    // check 3 
-    // while (pend_start != pend_end)
-    // {
-    //     bool changed = false;
-    //     int current = _vec[pend_start + groupSize - 1];
-    //     for (size_t i = 0; i < jacobsthalIndex; i++)
-    //     {
-    //         int compare = _vec[i * groupSize - 1];
-    //         if (compare > current)
-    //         {
-    //             copyMultiple(i * groupSize - 1, pend_start + groupSize - 1, groupSize);
-    //             changed = true;
-    //         }
-    //     }
-    //     if (changed == false)
-    //     {
-    //         copyMultiple(main_end, pend_start + groupSize - 1, groupSize);
-    //     }
-    //     if (current);
-    // }
-
-    std::cout << main_start << std::endl;
-    std::cout << main_end << std::endl;
-    std::cout << pend_start << std::endl;
-    std::cout << pend_end << std::endl;
-    std::cout << jacobsthalIndex << std::endl;
-    std::cout << jacobsthalInsert << std::endl;
-
-    // use that number move pend to main
-
-    // MOVE all A to main
     return ;
+    // watch this how to keep bound b3 should check a3 and further 
+    // if there is no enough element reverse;
+    // later
+    int no_pair = pend_end - pend_start + 1 / groupSize;
 
+    for (int i = 0; i < no_pair; i++)
+    {
+        int cur_number =_vec[pend_end];
+        int main_end = pend_start - 1;
+        if (cur_number < main_end)
+        {
+            copyMultiple(pend_start,   (groupSize - 1), groupSize);
+            pend_start += groupSize;
+        }
+        // if there is no less insert fornt
+    }
+    
+    //
 }
 
 void PmergeMe::initializeMainAndPend(size_t groupSize) {
+
+    // fail on group size 2
+    // have done what if group not found
     if (groupSize < 1 || _vec.size() / groupSize <= 2) {
         initializeMainAndPend(groupSize / 2) ;
         return ;
     }
-    size_t main_start = 0;
-    size_t main_end = groupSize * 2 - 1;
     size_t leftoverCount = _vec.size() % groupSize;
     size_t pend_start = groupSize * 2;
     size_t pend_end = _vec.size() - leftoverCount - 1;
 
-    insertPendIntoMain(main_start, main_end, pend_start, pend_end, groupSize);
+    insertPendIntoMain(pend_start, pend_end, groupSize);
     return ;
     initializeMainAndPend(groupSize / 2) ;
 }
@@ -198,12 +209,13 @@ void PmergeMe::sortVector() {
     // _timeVec = 1000000.0 * (end - start) / CLOCKS_PER_SEC;
     if (_vec.size() <= 1)
         return ;
-    int max = recursivePairing(1, _vec.begin() + 1);
-    initializeMainAndPend((size_t) max);
+    // int max = recursivePairing(1, _vec.begin() + 1);
+    initializeMainAndPend((size_t) 2);
     std::cout << "after" << std::endl;
     for (std::vector<int>::iterator it = _vec.begin(); it != _vec.end(); ++it) {
-        std::cout << *it << std::endl;
+        std::cout << *it << ' ';
     }
+    std::cout << std::endl;
 }
 
 void PmergeMe::sortDeque() {
