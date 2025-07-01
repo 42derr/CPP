@@ -49,6 +49,7 @@
         "variant": "cpp",
         "vector": "cpp",
         "complex": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "ostream": "cpp"
     }
 }
