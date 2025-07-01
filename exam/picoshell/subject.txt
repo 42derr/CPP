@@ -46,7 +46,7 @@ the next.
     const char *cmd3[] = {"wc", "-l", NULL};
 
     picoshell(cmd1, cmd2, cmd3); // executes: ls -l | grep txt | wc -l
-
+    ./picoshell cmd1 cmd2 cmd3
 • Evaluation:
 
     - Compilation:        [ ] OK    [ ] KO
