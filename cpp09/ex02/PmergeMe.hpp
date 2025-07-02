@@ -18,6 +18,7 @@ class PmergeMe {
         double _timeDeq;
         int _number;
         
+        void cleanAll();
         void isNumberValid(const std::string& number);
         void sortVector();
         void sortDeque();

@@ -3,107 +3,64 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-int count_words(const char *str)
-{
-    int i = 0;
-    int word = 0;
-
-    while (str[i] == ' ')
-        i++;
-
-    while (str[i]) {
-        word++;
-        while (str[i] && str[i] != ' ')
-            i++;
-        while (str[i] == ' ')
-            i++;
-    }
-
-    return word;
-}
-
-char *create_string(char **str)
-{
+int count_word(char *str) {
     int i = 0;
 
-    char *start = *str;
-    while ((*str)[i] && (*str)[i] != ' ')
-        i++;
-
-    char *new = malloc (sizeof(char) * (i + 1));
-    for (int j = 0; j < i; j++)
-        new[j] = start[j];
-    new[i] = '\0';
-    *str += i;
-    return new;
-}
-
-char **ft_split(char *str) {
-    int len = count_words(str);
-
-    char **arr = malloc(sizeof(char*) * (len + 1));
-    int i = 0;
-    while (i < len)
+    while (str[i])
     {
-        while (*str == ' ')
-            str++;
-        arr[i] = create_string(&str);
-        i++;
-    }
-    arr[i] = NULL;
-    return arr;
-}
-
-void doLast(char *argv) {
-    int pid = fork();
-    if (pid < 0)
-        return ;
-    if (pid == 0)
-    {
-        
-        char **com = ft_split(argv);
-        execve(com[0], com, NULL);   
-    }
-    else
-    {
-        waitpid(pid, NULL, 0);
+        while (str[i] **)
+        i++;    
     }
 }
 
-void doArgs(char *argv) {
+char** ft_split() {
+    
+}
+
+./picohell "/bin" "grep txt" "ls -l"
+
+int doLast() {
+
+}
+
+int doArgs(char *cmd) {
     int pipefd[2];
 
     if (pipe(pipefd) == -1)
-        return ;
-    int pid = fork();
+        return (-1);
+
+    pid_t pid = fork();
+    
     if (pid < 0)
-        return ;
+        return -1;
     if (pid == 0)
     {
-        
-        char **com = ft_split(argv);
+        if (dup2(pipefd[1], 1) == -1)
+        {
+            close(pipefd[0]);
+            close(pipefd[1]);
+            return -1;
+        }
         close(pipefd[0]);
-        dup2(pipefd[1], 1);
         close(pipefd[1]);
-        execve(com[0], com, NULL);   
-        // child
+        execve(,,NULL);
     }
     else
     {
-        close(pipefd[1]);
-        dup2(pipefd[0], 0);
+        if (dup2(pipefd[0], 0) == -1)
+        {
+            close(pipefd[0]);
+            close(pipefd[1]);
+            return -1;
+        }
         close(pipefd[0]);
+        close(pipefd[1]);
         waitpid(pid, NULL, 0);
-        // parent
     }
+    return (0);
 }
 
 int main(int argc, char *argv[]) {
-    int i = 1;
-    while (i < argc - 1){
-        doArgs(argv[i]);
-        i++;
-    }
-    doLast(argv[i]);
+    
     return (0);
 }

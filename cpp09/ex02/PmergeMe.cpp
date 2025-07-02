@@ -2,26 +2,40 @@
 
 PmergeMe::PmergeMe() {
     std::cout << "PmergeMe default constructor called" << std::endl;
+    // clean all container after use
 }
 
 PmergeMe::~PmergeMe() {
-    // clean all container after use
     std::cout << "PmergeMe destructor called" << std::endl;
 }
 
-PmergeMe::PmergeMe(const PmergeMe& other){
-    (void) other;
-    // implement later
+PmergeMe::PmergeMe(const PmergeMe& other): _vec(other._vec), _deq(other._deq), _before(other._before)
+, _after(other._after), _timeVec(other._timeVec), _timeDeq(other._timeDeq), _number(other._number){    
     std::cout << "PmergeMe copy constructor called" << std::endl;
 }
 
 PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
     if (this == &other)
         return *this;
-    (void) other;
-    // implement later
     std::cout << "PmergeMe copy assignment operator called" << std::endl;
+    _vec = other._vec;
+    _deq = other._deq;
+    _before = other._before;
+    _after = other._after;
+    _timeVec = other._timeVec;
+    _timeDeq = other._timeDeq;
+    _number = other._number;
     return *this;
+}
+
+void PmergeMe::cleanAll() {
+    _vec.clear();
+    _deq.clear();
+    _before.clear();
+    _after.clear();
+    _timeVec = 0;
+    _timeDeq = 0;
+    _number = 0;
 }
 
 void PmergeMe::printOutput(){
