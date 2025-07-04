@@ -1,7 +1,7 @@
 CXX = c++
 INCLUDES = .
 CXXFLAGS = -Wall -Wextra -Werror -MMD
-CXXFLAGS += -std=c++98
+# CXXFLAGS += -std=c++98
 
 NAME = PmergeMe
 SRCS = main.cpp PmergeMe.cpp

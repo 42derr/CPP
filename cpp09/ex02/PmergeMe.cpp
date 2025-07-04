@@ -138,6 +138,7 @@ void PmergeMe::insertAIntoMain(size_t& pend_start, size_t& pend_end, size_t grou
     pend_start = main_end + 1;
 }
 
+// 400 fail sometime
 int PmergeMe::insertNoPair(
     size_t& pend_start,
     size_t& pend_end,
@@ -145,14 +146,11 @@ int PmergeMe::insertNoPair(
     size_t& jacobIndex
 ) {
     if (pend_end - pend_start + 1 < groupSize * (insertJacobsthal(jacobIndex) - insertJacobsthal(jacobIndex - 1))) {
-        // WARNING THIS SHOULD RESPECT THE BOUND STILL ALTHOUGH INSERTED FROM THE BACK SKIP THE END(?)
         int no_pair = pend_end - pend_start + 1 / groupSize;        
 
         int bound = 0;
         if (((pend_end + 1) / groupSize) % 2 == 0)
             bound = 1;
-
-        // fail on 15
 
         for (int i = 0; i < no_pair; i++)
         {
@@ -160,17 +158,6 @@ int PmergeMe::insertNoPair(
             int cur_number =_vec[cur_pos];
             int main_pos = 0 + groupSize - 1 ;
             int main_number = _vec[main_pos] ;
-
-            // while (cur_number > main_number)
-            // {
-            //     main_pos = main_pos + groupSize;
-            //     main_number = _vec[main_pos] ;
-            //     if ((size_t)main_pos > pend_start - 1)
-            //     {
-            //         main_pos = pend_start + groupSize - 1;
-            //         break ;
-            //     }
-            // }
 
             int max_try = (pend_start / groupSize) - bound;
             int k = 0;
@@ -181,11 +168,9 @@ int PmergeMe::insertNoPair(
                 _comparison++;
                 if (cur_number <= main_number)
                 {
-
                     insert = true;
                     break;
                 }
-
                 main_pos += groupSize;
                 main_number = _vec[main_pos];
                 k++;
@@ -193,7 +178,7 @@ int PmergeMe::insertNoPair(
 
             if (insert == false)
             {
-                main_pos = pend_start - 1 + groupSize - 1;
+                main_pos = pend_start + groupSize - 1 - (groupSize * bound);
                 bound++;
             }
 
@@ -209,18 +194,6 @@ int PmergeMe::insertNoPair(
     }
     return (0);
 }
-
-    // while (cur_number > main_number)
-    // {
-    //     main_pos = main_pos + groupSize;
-    //     main_number = _vec[main_pos] ;
-    //     if ((size_t)main_pos > pend_start - 1)
-    //     {
-    //         main_pos = pend_start + groupSize - 1;
-    //         break ;
-    //     }
-    // }
-
 
 int PmergeMe::insertOnePair(
     size_t& pend_start,
