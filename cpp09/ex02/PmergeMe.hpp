@@ -7,6 +7,8 @@
 # include <algorithm> 
 # include <vector>
 # include <deque>
+# include <iomanip>
+#include <sys/time.h>
 
 class PmergeMe {
     private:
@@ -17,12 +19,17 @@ class PmergeMe {
         double _timeVec;
         double _timeDeq;
         int _number;
-        int _comparison;
+        int _comparisonVec;
+        int _comparisonDeq;
         
         void initContainer();
         void cleanAll();
         void isNumberValid(const std::string& number);
+        void printManyNumber();
+        void printLessFiveNumber();
         void printOutput();
+        bool isSortedDeq();
+        bool isSortedVec();
         void checkSorted();
 
         void swapMultiple(size_t pos1, size_t pos2, size_t size);
@@ -37,6 +44,15 @@ class PmergeMe {
         int insertNoPair(size_t& pend_start, size_t& pend_end, size_t& groupSize, size_t& jacobIndex);
 
         void sortDeque();
+        void swapMultipleDeque(size_t pos1, size_t pos2, size_t size);
+        void copyMultipleDeque(size_t pos1, size_t pos2, size_t size);
+        int recursivePairingDeque(int size, std::deque<int>::iterator it);
+        void initializeMainAndPendDeque(size_t groupSize);
+        void insertPendIntoMainDeque(size_t pend_start, size_t pend_end, size_t groupSize);
+        void insertAIntoMainDeque(size_t& pend_start, size_t& pend_end, size_t groupSize);
+        int insertOnePairDeque(size_t& pend_start, size_t& pend_end, size_t& groupSize, size_t& jacobIndex);
+        int insertNoPairDeque(size_t& pend_start, size_t& pend_end, size_t& groupSize, size_t& jacobIndex);
+        
 
     public:
         PmergeMe();

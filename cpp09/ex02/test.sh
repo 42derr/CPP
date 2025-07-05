@@ -27,10 +27,13 @@ calc_comparisons() {
 }
 
 comparisons=$(calc_comparisons "$n")
-echo "Comparisons : F($n) = $comparisons"
+echo "Maximum Comparisons : F($n) = $comparisons"
 
-# Generate n random numbers (0 to 9999)
-random_numbers=$(shuf -i 0-$((n - 1)) -n "$n" | xargs)
+# no dup
+# random_numbers=$(shuf -i 0-$((n - 1)) -n "$n" | xargs)
+
+# with dup
+random_numbers=$(yes | shuf -i 0-9999 -n "$n" | xargs)
 
 # Run ./PmergeMe with the generated numbers
 ./PmergeMe "$random_numbers"
