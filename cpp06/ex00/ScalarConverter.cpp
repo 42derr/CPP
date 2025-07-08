@@ -49,7 +49,11 @@ void toInt(double d)
 
 void toDouble(double d)
 {
-    std::cout << "double: " << d << std::endl;
+    double c = std::floor (d);
+    if (c != d)
+        std::cout << "double: " << d << std::endl;
+    else
+        std::cout << std::fixed << std::setprecision(1) << "double: " << d << std::endl;
 }
 
 void toFloat(double d)
@@ -59,7 +63,11 @@ void toFloat(double d)
         return ;
     }
     float f = static_cast<float>(d);
-    std::cout << "float: " << f << "f" << std::endl;
+    float c = std::floor (f);
+    if (c != f)
+        std::cout << "float: " << f << "f" << std::endl;
+    else
+        std::cout << std::fixed << std::setprecision(1) << "float: " << f << "f" << std::endl;
     return ;
 }
 
