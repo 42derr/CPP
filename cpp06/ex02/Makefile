@@ -3,7 +3,7 @@ INCLUDES = .
 CXXFLAGS = -Wall -Wextra -Werror -MMD
 CXXFLAGS += -std=c++98
 
-NAME = template
+NAME = generate
 SRCS = main.cpp Base.cpp generate.cpp
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)

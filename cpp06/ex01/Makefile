@@ -3,7 +3,7 @@ INCLUDES = .
 CXXFLAGS = -Wall -Wextra -Werror -MMD
 CXXFLAGS += -std=c++98
 
-NAME = template
+NAME = serializer
 SRCS = main.cpp Serializer.cpp
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
