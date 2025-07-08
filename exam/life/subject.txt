@@ -1,0 +1,122 @@
+*****************************************
+*                life                  *
+*****************************************
+
+Allowed functions: read, write, malloc, free
+
+-----------------------------------------
+File to turn in: life.c
+-----------------------------------------
+
+You must implement Conway’s Game of Life in C.
+
+The simulation must be printed in the terminal using only text-based display.
+
+No C++ features or STL containers are allowed.  
+Use only C-style dynamic memory allocation and standard system I/O functions.
+
+-----------------------------------------
+Game of Life Rules:
+
+The world is a 2D grid of cells.
+
+Each cell is either alive (1) or dead (0).
+
+For each step (generation), update the grid using the following rules:
+
+1. Any live cell with fewer than 2 live neighbors dies (underpopulation).
+2. Any live cell with 2 or 3 live neighbors lives on.
+3. Any live cell with more than 3 live neighbors dies (overpopulation).
+4. Any dead cell with exactly 3 live neighbors becomes alive (reproduction).
+
+-----------------------------------------
+Display Format:
+
+- Print the grid using write(1, ..., ...)
+- Alive cells: #
+- Dead cells:  .
+
+Example output for a 5x5 grid:
+
+.....
+..#..
+...#.
+.###.
+.....
+
+Print one generation per frame. You may add a delay using usleep() or a loop for visual clarity.
+
+-----------------------------------------
+Function Prototype:
+
+void simulate_life(int rows, int cols, int steps, int **initial);
+
+Parameters:
+- rows, cols: Size of the grid.
+- steps: Number of generations to simulate.
+- initial: A dynamically allocated 2D array representing the initial state (0 = dead, 1 = alive)
+
+You must simulate the given number of generations and print the grid to terminal after each step.
+
+You may use helper functions and additional memory as needed.
+
+-----------------------------------------
+Example:
+
+Input:
+int grid[5][5] = {
+    {0,0,0,0,0},
+    {0,0,1,0,0},
+    {0,0,0,1,0},
+    {0,1,1,1,0},
+    {0,0,0,0,0}
+};
+// Convert grid to int** initial (use malloc)
+simulate_life(5, 5, 4, initial);
+
+Output: (4 frames printed with transitions)
+.....
+..#..
+...#.
+.###.
+.....
+
+-----------------------------------------
+Constraints:
+
+- Grid size ≤ 100 x 100
+- Only use: read, write, malloc, free
+- You may clear screen by printing multiple newlines (\n\n\n)
+- Do not use stdio.h, fopen, scanf, printf, or any system call wrappers
+- You must not leak memory
+
+-----------------------------------------
+Compilation:
+
+gcc -Wall -Wextra -Werror life.c -o life
+
+-----------------------------------------
+Execution:
+
+./life < input_file
+
+or embed the input in code manually and call simulate_life().
+
+-----------------------------------------
+Bonus:
+
+- (+5) Add delay between frames using a loop or usleep
+- (+10) Implement edge wrapping (toroidal grid)
+- (+10) Add user input for live cell coordinates and grid size
+
+-----------------------------------------
+Submission:
+
+Submit life.c.
+
+Your code must:
+- Compile without errors or warnings
+- Conform to the interface
+- Not leak memory
+
+Good luck, and breathe life into the grid 🧬

@@ -1,0 +1,124 @@
+*****************************************
+*                bsq                   *
+*****************************************
+
+Allowed functions: read, write, open, close, malloc, free
+
+-----------------------------------------
+File to turn in: bsq.c
+-----------------------------------------
+
+You must implement a C program that reads a map from a file (or standard input), finds the **biggest square** consisting of empty cells only, and fills that square with a special character.
+
+This exercise is a classic **dynamic programming** problem known as **BSQ (Biggest Square)**.
+
+-----------------------------------------
+Map Format:
+
+The input map is defined as a text file or standard input. The format is as follows:
+
+The **first line** is the header:
+    <number_of_lines><empty_char><obstacle_char><full_char>\n
+
+Each of the following `number_of_lines` lines contains only `empty_char` or `obstacle_char`.
+
+All lines must be the same length.
+
+Example:
+9.oX
+..............................
+.....o........................
+..............o..............
+....................o........
+......o.......................
+.............o...............
+.....................o.......
+..................o..........
+........o.....................
+
+-----------------------------------------
+Program Requirements:
+
+- Parse the header line:
+    - Extract the number of lines (as an integer)
+    - Extract `empty_char`, `obstacle_char`, and `full_char`
+- Read and store the map using **2D char arrays (allocated dynamically)**
+- Validate the map:
+    - Must contain only `empty_char` and `obstacle_char`
+    - All lines must have the same length
+    - Line count must match header
+
+- Implement a **dynamic programming** algorithm to find the biggest square of `empty_char` values, using:
+
+    if (cell is obstacle)
+        dp[i][j] = 0;
+    else
+        dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+
+- Replace that square in the original map with the `full_char`
+
+- Print the resulting map to standard output using `write`
+
+-----------------------------------------
+Example:
+
+Input:
+4.oX
+....
+.o..
+....
+..o.
+
+Output:
+....
+.o..
+.XX.
+.XX.
+
+-----------------------------------------
+Constraints:
+
+- Input map will contain at most 1000 rows
+- Each line will contain at most 1000 characters
+- You must use only **standard I/O system calls** (e.g. `read`, `write`, `open`)
+- You must not use **C++ or any high-level I/O functions** like `fopen`, `getc`, `scanf`, `getline`
+- You must not use **external libraries**
+
+-----------------------------------------
+Compilation:
+
+gcc -Wall -Wextra -Werror bsq.c -o bsq
+
+-----------------------------------------
+Execution:
+
+./bsq < input_file
+
+If no file is provided, read from `stdin`.
+
+-----------------------------------------
+Bonus:
+
+- (+5) Support reading from `stdin` if no file is provided
+- (+5) Handle multiple maps in a single execution
+- (+5) Support **non-square** (rectangular) maps
+
+-----------------------------------------
+Errors to Handle:
+
+- Invalid or malformed header line
+- Inconsistent line lengths
+- Invalid characters in map lines
+- Incorrect number of lines
+
+-----------------------------------------
+Submission:
+
+Submit `bsq.c`.
+
+Your code must:
+- Compile without errors or warnings
+- Not leak memory
+- Conform to the given interface and constraints
+
+Good luck! Find your biggest square ⬛
