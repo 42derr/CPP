@@ -1,0 +1,92 @@
+*****************************************
+*              polyset                 *
+*****************************************
+
+Allowed functions: std::cin, std::cout, new, delete
+
+-----------------------------------------
+File to turn in: polyset.cpp
+-----------------------------------------
+
+Implement the following function:
+
+int polyset(int *arr, int size);
+
+-----------------------------------------
+Description:
+
+You must implement a function called `polyset` that takes an array of positive integers and its size.
+
+Each integer represents the length of a side.
+
+Your task is to compute how many **distinct combinations** of 3 or more sides form a **valid polygon**.
+
+A valid polygon (triangle or more) satisfies the generalized triangle inequality:
+
+> For any polygon with `k` sides:  
+> The **sum of any (k - 1) sides** must be **greater than the remaining side**.
+
+Only count each unique combination once. The order of the sides does not matter.
+
+You must not use any STL containers such as `std::vector`, `std::set`, `std::sort`, etc.
+
+You are allowed to use arrays and simple C++ control structures.
+
+-----------------------------------------
+Examples:
+
+Input:
+    int arr[] = {2, 3, 4};
+    int result = polyset(arr, 3);
+
+Output:
+    1
+
+Explanation:
+    3 sides → check if 2 + 3 > 4, 2 + 4 > 3, 3 + 4 > 2 → true.
+    One valid polygon.
+
+---
+
+Input:
+    int arr[] = {1, 2, 3, 4};
+    int result = polyset(arr, 4);
+
+Output:
+    3
+
+Explanation:
+    Possible 3-side combinations:
+        (1,2,3) → invalid (1+2 = 3, not > 3)
+        (1,2,4) → invalid
+        (1,3,4) → valid
+        (2,3,4) → valid
+    (1,2,3,4) → 4 sides → valid polygon → valid
+    Total valid = 3
+
+---
+
+Input:
+    int arr[] = {5, 10, 25};
+    int result = polyset(arr, 3);
+
+Output:
+    0
+
+Explanation:
+    Not a polygon: 5 + 10 = 15 which is not > 25.
+
+-----------------------------------------
+Constraints:
+
+- You must not use any STL containers.
+- The array will contain at most 10 elements.
+- Each element will be a positive integer ≤ 1000.
+- You must return the number of valid polygon combinations.
+
+-----------------------------------------
+Bonus:
+
+- (+5) Handle arrays of up to 15 elements using only arrays (no STL).
+- (+10) Avoid generating duplicate combinations (e.g., (2,3,4) and (4,2,3)).
+

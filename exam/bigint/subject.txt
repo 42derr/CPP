@@ -1,0 +1,105 @@
+*****************************************
+*                bigint                *
+*****************************************
+
+Allowed functions: std::cin, std::cout, new, delete
+
+-----------------------------------------
+File to turn in: bigint.cpp
+-----------------------------------------
+
+Implement a class to represent arbitrarily large **unsigned integers**, called `BigInt`.
+
+You must **not use** any STL containers (no `std::vector`, `std::string`, etc.)
+
+Instead, you must store digits manually using dynamic memory (arrays).
+
+-----------------------------------------
+Class definition:
+
+You must implement the following public interface:
+
+class BigInt {
+public:
+    BigInt(const char *number);        // Construct from C-string
+    BigInt(const BigInt &other);       // Copy constructor
+    ~BigInt();                         // Destructor
+
+    BigInt &operator=(const BigInt &other); // Assignment
+
+    BigInt operator+(const BigInt &other) const; // Addition
+    bool operator==(const BigInt &other) const;  // Comparison
+    bool operator<(const BigInt &other) const;
+
+    void lshift(unsigned int digits);  // Left shift by digit positions (multiply by 10^n)
+    void rshift(unsigned int digits);  // Right shift by digit positions (integer divide by 10^n)
+
+    void print() const;                // Print to stdout
+};
+
+-----------------------------------------
+Details:
+
+- Store digits in base 10, least-significant-digit first or any format that works.
+- You must allocate dynamic memory manually (`new`, `delete`) to store digits.
+- Do **not** use `std::string` or `std::vector`.
+- All inputs are guaranteed to be valid non-negative integers, fitting in C-string format.
+
+-----------------------------------------
+Examples:
+
+Input:
+    BigInt a("12345678901234567890");
+    BigInt b("98765432109876543210");
+    BigInt c = a + b;
+    c.print();
+
+Output:
+    111111111011111111100
+
+---
+
+Input:
+    BigInt a("123000");
+    a.rshift(3);
+    a.print();
+
+Output:
+    123
+
+---
+
+Input:
+    BigInt a("42");
+    a.lshift(5);
+    a.print();
+
+Output:
+    4200000
+
+---
+
+Input:
+    BigInt a("9999");
+    BigInt b("10000");
+    std::cout << (a < b) << std::endl;
+
+Output:
+    1
+
+-----------------------------------------
+Constraints:
+
+- Input strings will be at most 1000 characters.
+- You must not use any STL containers.
+- Use only `new`, `delete`, loops, basic control flow, and C-style arrays.
+- Leading zeroes must not be printed (e.g., `000123` → `123`).
+- Do not leak memory. Implement copy constructor and assignment correctly.
+
+-----------------------------------------
+Bonus:
+
+- (+5) Implement subtraction.
+- (+5) Support multiplication by another `BigInt`.
+- (+10) Implement input parsing from `std::cin`.
+

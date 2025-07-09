@@ -1,0 +1,90 @@
+*****************************************
+*                vect2                 *
+*****************************************
+
+Allowed functions: std::cin, std::cout, new, delete
+
+-----------------------------------------
+File to turn in: vect2.cpp
+-----------------------------------------
+
+Implement a set of functions to perform basic 2D vector operations.
+
+You must use the following struct:
+
+struct Vect2 {
+    float x;
+    float y;
+};
+
+-----------------------------------------
+You must implement the following functions:
+
+Vect2 add(Vect2 a, Vect2 b);
+Vect2 sub(Vect2 a, Vect2 b);
+float magnitude(Vect2 v);
+Vect2 normalize(Vect2 v);
+
+-----------------------------------------
+Descriptions:
+
+- `add`: Returns the result of vector addition `a + b`
+- `sub`: Returns the result of vector subtraction `a - b`
+- `magnitude`: Returns the magnitude (length) of the vector using:
+      sqrt(x^2 + y^2)
+- `normalize`: Returns a unit vector in the same direction as `v`
+
+  > If the magnitude of `v` is 0, return (0, 0)
+
+You must not use any STL or math library.  
+Implement your own square root function using the Babylonian method (or any iterative method).
+
+-----------------------------------------
+Examples:
+
+Input:
+    Vect2 a = {3, 4};
+    float m = magnitude(a);
+    std::cout << m << std::endl;
+
+Output:
+    5.0
+
+---
+
+Input:
+    Vect2 a = {3, 4};
+    Vect2 n = normalize(a);
+    std::cout << n.x << " " << n.y << std::endl;
+
+Output:
+    0.6 0.8
+
+---
+
+Input:
+    Vect2 a = {5, -2};
+    Vect2 b = {-3, 7};
+    Vect2 r = add(a, b);
+    std::cout << r.x << " " << r.y << std::endl;
+
+Output:
+    2 5
+
+-----------------------------------------
+Constraints:
+
+- You must not use any STL containers or `<cmath>`.
+- You must not use `sqrt()` from the standard library.
+- Use only basic math operators and iterative logic.
+- All values are float-precision only.
+- Input values are within [-1000.0, 1000.0]
+
+-----------------------------------------
+Bonus:
+
+- (+5) Implement dot product:
+    float dot(Vect2 a, Vect2 b);
+- (+5) Implement angle between two vectors (in degrees)
+    float angle(Vect2 a, Vect2 b);
+
