@@ -39,6 +39,11 @@ void BitcoinExchange::loadDatabase() {
 }
 
 void BitcoinExchange::loadInput(const std::string& input) {
+    if (input.empty())
+    {
+        std::cerr << "Input can't be empty" << std::endl;
+        return ;
+    }
     std::ifstream inputFile(input.c_str());
     if (!inputFile) {
         throw std::runtime_error("Error: could not open file.");

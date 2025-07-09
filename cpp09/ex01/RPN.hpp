@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <sstream>
+# include <stack>
 
 class RPN {
     private:

@@ -557,6 +557,11 @@ void PmergeMe::checkSorted() {
 }
 
 void PmergeMe::loadNumber(const std::string number) {
+    if (number.empty())
+    {
+        std::cerr << "Input can't be empty" << std::endl;
+        return;
+    }
     isNumberValid(number);
     _before = number;
     initContainer();
