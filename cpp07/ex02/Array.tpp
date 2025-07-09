@@ -4,7 +4,7 @@
 # include "Array.hpp"
 
 template <typename T>
-Array<T>::Array() : array_size(0), array(new T[0]) {
+Array<T>::Array() : array_size(0), array(new T[0]()) {
     // std::cout << "Array default constructor called" << std::endl;
 }
 
