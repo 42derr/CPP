@@ -9,7 +9,7 @@ Array<T>::Array() : array_size(0), array(new T[0]) {
 }
 
 template <typename T>
-Array<T>::Array(unsigned int n) : array_size(n), array(new T[n]) {
+Array<T>::Array(unsigned int n) : array_size(n), array(new T[n]()) {
     // std::cout << "Array constructor called" << std::endl;
 }
 
@@ -41,6 +41,15 @@ Array<T>& Array<T>::operator=(const Array<T>& other) {
 
 template <typename T>
 T& Array<T>::operator[](unsigned int index)
+{
+    if (index >= array_size) {
+        throw std::out_of_range("Index is out of bounds");
+    }
+    return array[index];
+}
+
+template <typename T>
+const T& Array<T>::operator[](unsigned int index) const
 {
     if (index >= array_size) {
         throw std::out_of_range("Index is out of bounds");
